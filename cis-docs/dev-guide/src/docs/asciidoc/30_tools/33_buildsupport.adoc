@@ -1,0 +1,9 @@
+[[buildsupport]]
+### Build-Support
+
+To support the build the following tools are being used:
+
+. Backend: <<gradle,gradle>>
+
+include::331_gradle.adoc[]
+

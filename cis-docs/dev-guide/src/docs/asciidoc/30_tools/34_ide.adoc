@@ -1,0 +1,7 @@
+[[ide]]
+### Integrated Development Environment
+
+The backend functionality (Java) is mainly developed via Intellij
+
+include::341_intellij.adoc[]
+

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style type="text/css">
+        @page {
+
+            @bottom-center {
+                content: "Acknowledge Letter";
+                vertical-align: top;
+                padding-top: 10px;
+            }
+
+            @bottom-right {
+                content: counter(page) " of "counter(pages);
+            }
+
+            margin: 1cm;
+            size: A4 portrait;
+
+        }
+
+        .font {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table tr {
+            page-break-inside: avoid;
+        }
+
+        .table td,
+        .table th {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .table tr:nth-child(even) {
+
+            background-color: #dddddd;
+        }
+
+
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td,
+        #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 300px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .details-table th {
+            text-align: left;
+        }
+
+        .details-table td,
+        .details-table th {
+            padding-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .heading,
+        .value {
+            padding-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .bolder {
+            font-weight: bolder;
+        }
+
+        img {
+            border: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="font">
+    <table class="w-100">
+        <tbody>
+        <tr>
+            <td style="width:33%; vertical-align: top;">
+                <h5 style="color: black;">Province Office Address</h5>
+                <span th:text="${provinceAddress}"></span>
+            </td>
+            <td style="width:33%;vertical-align: middle;">
+                <img th:src="${referenceNumber}" data-type="code128" style="height: 1cm" />
+            </td>
+            <td style="width:33%;vertical-align: top;">
+                <img alt="" height="90" src="logo.png"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table style="font-size: 80%; text-align: left;">
+        <tbody>
+        <tr>
+            <td style="width:33.33%; vertical-align: top;">
+                <div class="bolder heading">Requester&#8217;s Name:</div>
+                <div class="value">
+                    <span th:text="${reqName}"></span>
+
+                </div>
+                <div class="bolder heading">Requester&#8217;s Address:</div>
+                <div class="value">
+                    <span class="value" th:text="${reqAddress}"></span>
+                </div>
+                <div class="bolder heading">Email ID:</div>
+                <div class="value" th:text="${reqEmail}"></div>
+                <div class="bolder heading">Mobile No:</div>
+                <div class="value" th:text="${reqMobile}"></div>
+            </td>
+            <td style="width:33.33%;vertical-align: bottom;">
+                <div class="bolder heading">Date:</div>
+                <div class="value" th:text="${date}"></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table style="font-size: 80%; text-align: left;">
+        <tbody>
+        <tr>
+            <td style="width:33.33%; vertical-align: top;">
+                <p>Sir/Madam,</p>
+                <div class="bolder heading">Reservation Outcome </div>
+
+                <div>With reference  to your request
+                    <span th:text="${referenceNumber}" style="font-weight: bold"></span>
+                    dated <span th:text="${draftDate}" style="font-weight: bold"></span>
+                </div>
+                <div style="padding-top: 20px;">Kindly be informed that the following numbers have been reserved for you</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table  style="margin-top: 20px; border-bottom:5px; -fs-table-paginate: paginate;  text-align: left" th:each="step,status: ${steps}">
+        <thead>
+            <tr>
+                <th style="width: 100%;" colspan="2">
+                    <span th:text="${step.reasonName}"></span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="width: 100%;">
+                <td style="width: 50%">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td style="text-decoration: underline;">
+                                    Parcel Details
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="request: ${step.getReservationDraftRequests()}">
+                                <td th:text="${request.getDesignation()}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="width: 50%">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td  style="text-decoration: underline;">
+                                    Reservation Details
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="outcome: ${step.getReservationOutcomes()}">
+                                <td th:text="${outcome.getDesignation()}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr th:each="condition: ${conditions}">
+                <td colspan="2" th:if="${step.getStepId()} == ${condition.getStepId()}">
+                    <span th:text="${condition.getConditionAlphabet()}">-</span>
+                    <span th:text="${condition.getCondition()}"></span>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+    <div style="padding-top: 70px;"></div>
+    <table style="text-align: left;">
+        <tbody>
+        <tr>
+            <td>
+                <p>Yours Faithfully</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table style="font-size: 80%; text-align: left;">
+        <tbody>
+        <tr>
+            <td style="width:50%; vertical-align: top; padding-top: 30px">
+                <div class="bolder heading">For Surveyor-General :
+                    <span class="value" th:text="${provinceName}">
+                        </span>
+                </div>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>

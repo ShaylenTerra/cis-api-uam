@@ -1,0 +1,49 @@
+[[mapstruct]]
+=== Bean-Mapping with mapstruct
+
+==== Why do we use it?
+
+Mapping between JPA and DTO classes is error-prone and time consuming if performed manually.
+Therefore we use mapstruct for this.
+
+==== Example
+
+[source,java]
+----
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface CompanyMapper {
+
+    CompanyMapper INSTANCE = Mappers.getMapper(CompanyMapper.class);
+
+
+    Company jpaToDto(CompanyJpa jpa);
+    CompanyJpa dtoToJpa(Company dto);
+}
+----
+
+[source,java]
+----
+@Path("/companies")
+@Service
+public class CompanyService {
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompany(final @PathParam("id") String id) {
+        CompanyJpa resultJpa = repo.findOne(Long.valueOf(id));
+        if (resultJpa != null) {
+            return Response.ok(CompanyMapper.INSTANCE.jpaToDto(resultJpa)).build();
+        } else {
+            throw new NotFoundException();
+        }
+    }
+}
+----
+
+==== References
+
+* Homepage of mapstruct: http://mapstruct.org/

@@ -1,0 +1,22 @@
+package com.dw.ngms.cis.web.vm.dashboard;
+
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+
+/**
+ * @author : prateekgoel
+ * @since : 25/03/21, Thu
+ **/
+@Data
+public class UserSummaryVm {
+
+    private Long userId;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate fromDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate toDate;
+}

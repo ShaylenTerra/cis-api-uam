@@ -1,0 +1,26 @@
+pluginManagement {
+    plugins {
+        id 'org.springframework.boot' version "${spring_boot_version}"
+        id 'com.gorylenko.gradle-git-properties' version "${git_properties_plugin_version}"
+        id 'io.spring.dependency-management' version "${spring_dependency_version}"
+        id 'org.asciidoctor.jvm.pdf' version "${asciidoctor_version}"
+        id 'org.asciidoctor.jvm.gems' version "${asciidoctor_version}"
+    }
+}
+
+rootProject.name = 'cis-api-uam'
+
+include 'cis-api'
+project(":cis-api").projectDir = new File("./cis-api")
+
+include 'cis-search'
+project(":cis-search").projectDir = new File("./cis-search")
+
+include 'dev-guide'
+project(":dev-guide").projectDir = new File("./cis-docs/dev-guide")
+
+include 'cis-workflow'
+project(":cis-workflow").projectDir = new File("./cis-workflow")
+
+include 'cis-emailer'
+project(":cis-emailer").projectDir = new File("./cis-emailer")

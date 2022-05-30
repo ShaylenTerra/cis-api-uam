@@ -1,0 +1,62 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@10.10.20.200:1521:sgtrndb
+    username: sguser
+    password: sguser12
+    hikari:
+      data-source-properties:
+        oracle.net.timeout: 10000
+  application:
+    name: cis-workflow
+  mail:
+    host: 10.10.20.205
+    username: mdb@dataworld.co.za
+    password: Dw#$SMTP
+    port: 25
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    properties:
+      hibernate.format_sql: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      # modify fetch size as necessary
+      hibernate.jdbc.fetch_size: 150
+      hibernate.criteria.literal_handling_mode: BIND
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+      hibernate.event.merge.entity_copy_observer: allow
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# ===================================================================
+
+cis-emailer:
+  mail:
+    bcc: gairola.arvind@gmail.com,phila@dataworld.co.za,boipelo@dataworld.co.za,sello@dataworld.co.za,prateek@harvesting.co,pragayanshu@terra.group,Adhir.Nursayhe@dalrrd.gov.za
+    email-from: cis@dalrrd.gov.za

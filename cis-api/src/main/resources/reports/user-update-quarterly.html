@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        @page {
+
+            @bottom-left {
+                content: "Agriculture, Land Reform and Rural Development ";
+                vertical-align: top;
+                padding-top: 10px;
+            }
+
+            @bottom-center {
+                content: "User Update Quarterly Report";
+                vertical-align: top;
+                padding-top: 10px;
+            }
+
+            @bottom-right {
+                content: counter(page) " of " counter(pages);
+            }
+            margin: 1cm;
+            size: 50cm 25cm;
+
+        }
+
+
+        .font {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table tr {
+            page-break-inside: avoid;
+        }
+
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+        }
+
+        #customers td,
+        #customers th {
+            border: 1px solid #888986;
+            padding: 8px;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #88B649;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            color: #018000;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        #headerTable {
+            margin-bottom: 30px;
+        }
+
+        body {
+            line-height: 1.3;
+        }
+
+        img{border:0;}
+
+    </style>
+</head>
+<body>
+<div class="font">
+    <table id="headerTable">
+        <tr>
+            <td width="33.33%"><img alt="" height="100" src="logo.png">
+            </td>
+            <td width="33.33%"><p class="header">User Update Quarterly Report</p></td>
+            <td width="33.33%"><img alt="image not found" height="100"
+                                    src="flag-sa.jpg"
+                                    style="float: right;"
+                                    width="200"></td>
+        </tr>
+    </table>
+
+    <div>
+        <div style="font-size: 80%;">
+            <p>
+                <b>Date From :</b>
+                <span th:text="${#temporals.format(request.fromDate, 'dd/MMM/yyyy')}"></span>
+            </p>
+            <p>
+                <b>Date To :</b>
+                <span th:text="${#temporals.format(request.toDate, 'dd/MMM/yyyy')}"></span>
+            </p>
+            <p>
+                <b>Province :</b>
+                <span th:text="${request.provinceName} ?: 'ALL'"></span>
+            </p>
+            <p>
+                <b>User Type :</b>
+                <span th:text="${request.userType} ?: 'ALL'"></span>
+            </p>
+        </div>
+
+    </div>
+    <div>
+        <table border="0px" id="customers" style="margin-top: 40px; -fs-table-paginate: paginate; border-spacing: 0;">
+            <thead>
+            <tr>
+                <th th:each="column : ${columns}">
+                    <span th:text="${column}"></span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="summary : ${data}">
+                <td th:text="${summary.provinceName}"></td>
+                <td th:text="${summary.userType}"></td>
+                <td th:text="${summary.year}"></td>
+                <td th:text="${summary.quarter}"></td>
+                <td th:text="${summary.totalUserRegistration}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

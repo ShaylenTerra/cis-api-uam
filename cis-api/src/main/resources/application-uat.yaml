@@ -1,0 +1,64 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@10.1.15.219:1521:CISUAT
+    username: sguser
+    password: sguser12
+    hikari:
+      data-source-properties:
+        oracle.net.timeout: 10000
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: cis-db-pool
+  ldap:
+    embedded:
+      validation:
+        enabled: false
+management:
+  health:
+    ldap:
+      enabled: false
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# ===================================================================
+app:
+  file-storage:
+    storage-location: C:\cis-uam-upload-files\uat\app\cis
+  ldap:
+    group-search-base: DC=terra,DC=group
+    password: ldapterr@
+    url: ldap://10.1.15.1
+    user-search-filter: sAMAccountName={0}
+    user-search-base: DC=terra,DC=group
+    user-dn: Ldap.terra
+    referral: follow
+cis-search:
+  image-prefix-path:
+    thumbnail-prefix: http://dwapps.co.za/DRDLRRM/CSGTIF/CIS_Latest_Images_ThumbNails/
+    preview-prefix: http://dwapps.co.za/DRDLRRM/CSGTIF/
+    url-prefix: http://dwapps.co.za/DRDLRRM/CSGTIF/

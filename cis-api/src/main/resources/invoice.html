@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        @page {
+
+            @bottom-center {
+                content: "Invoice";
+                vertical-align: top;
+                padding-top: 10px;
+            }
+
+            @bottom-right {
+                content: counter(page) " of " counter(pages);
+            }
+            margin: 1cm;
+            size: A4 portrait;
+
+        }
+
+        .font {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table tr {
+            page-break-inside: avoid;
+        }
+
+        .table td,
+        .table th {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .table tr:nth-child(even) {
+
+            background-color: #dddddd;
+        }
+
+
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td,
+        #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 300px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .details-table th {
+            text-align: left;
+        }
+
+        .details-table td,
+        .details-table th {
+            padding-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .heading,
+        .value {
+            padding-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .bolder {
+            font-weight: bolder;
+        }
+        img{border:0;}
+    </style>
+</head>
+<body>
+<div class="font">
+    <table class="w-100">
+        <tr th:if="${!isFinalVersion}"><td  style="background-color: red;"><div style="text-align: center;font-weight: bold;">Draft Version</div></td></tr>
+        <tr>
+            <td width="33%">
+                <div style="font-size: x-large;">INVOICE</div>
+            </td>
+            <td width="33%">
+                <img
+                     th:src="${workflow.referenceNo}" data-type="code128"  style="height: 1cm" />
+            </td>
+            <td width="33%">
+                <img alt="" height="90"
+                                           src="logo.png"/></td>
+        </tr>
+    </table>
+    <table style="font-size: 80%; text-align: left;">
+        <tbody>
+        <tr>
+            <td style="width:33.33%">
+                <table class="details-table" style="width: 100%">
+                    <tr>
+                        <td>#REF No</td>
+                        <td th:text="${workflow?.referenceNo}"></td>
+                    </tr>
+                    <tr>
+                        <td>Dated On</td>
+                        <td><span th:text="${#temporals.format(payment?.invoiceGenerationDate, 'dd/MMM/yyyy')}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Due Date</td>
+                        <td><span th:text="${#temporals.format(dueDate, 'dd/MMM/yyyy')}"></span></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="text-align: left;">From</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">SURVEYOR GENERAL: <span th:text="${province?.provinceName}"></span></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="text-align: left;">Physical Address</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2" th:if="${province.provinceAddress}">
+                            <span th:text="${province?.provinceAddress?.provinceAddress}"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="text-align: left;">Mobile</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span th:text="${province?.provinceAddress?.provinceContactNumber}"></span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width:33.33%"></td>
+            <td style="width:33.33%; vertical-align: top;">
+                <div class="bolder heading">Requester’s Name:</div>
+                <div class="value" >
+                    <span th:text="${requester?.firstName}"></span>
+                    <span th:text="${requester?.surName}"></span>
+                </div>
+                <div class="bolder heading">Requester’s Address:</div>
+                <div class="value">
+                    <span class="value" th:text="${requester?.addressLine1}"></span>
+                    <span class="value" th:text="${requester?.addressLine2}"></span>
+                    <span class="value" th:text="${requester?.addressLine3}"></span>
+                    <span class="value" th:text="${requester?.postalCode}"></span>
+                </div>
+                <div class="bolder heading">Email ID:</div>
+                <div class="value" th:text="${requester?.email}"></div>
+                <div class="bolder heading">Mobile No:</div>
+                <div class="value" th:text="${requester?.contactNo}"></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table id="customers" style="margin-top: 40px; -fs-table-paginate: paginate; border-spacing: 0;">
+        <thead>
+        <tr>
+            <th style="width: 10%;">Serial No.</th>
+            <th style="width: 70%;">Items</th>
+            <th style="width: 20%;text-align: right;">Price(In Rands)</th>
+        </tr>
+        </thead>
+        <th:block th:each="cartData: ${data}">
+            <tr th:each="cartItem,stat :  ${cartData}" th:with="cd=${cartItem}">
+                <td th:text="${cd?.sno}"></td>
+                <td>
+                    <div>
+                        <span th:text="${cd?.item}"></span>
+                        <span th:text="${cd?.details}"></span>
+                    </div>
+                    <div style="padding-top: 3px;font-size: 11px;font-style: italic; color: gray;"
+                         th:text="'LPI: ' + ${cd?.lpicode}"></div>
+                </td>
+                <td style="text-align: right;" th:text="${cd?.finalCost}"></td>
+            </tr>
+        </th:block>
+    </table>
+    <div class="row" style="margin-top: 30px;">
+        <div class="column">
+            <b>
+                <h5>PLEASE NOTE OUR BANKING DETAILS</h5>
+            </b>
+            <div style="font-size: 80%;">
+                <p>Account : Surveyor General</p>
+                <p>Bank Details : ABSA Bank Sub Total</p>
+                <p>Branch Code: : 4054066</p>
+                <p>Account No : 40540091187689</p>
+                <p>Type of A/C: Corporate</p>
+
+            </div>
+
+        </div>
+        <div class="column">
+            <div style="font-size: 80%;float:right">
+
+                <p style="margin-top: 60px;"><b>Total VAT (R): 0.0</b></p>
+                <p><b>Sub Total (R): 0.0</b></p>
+                <p><b>Grand Total (R): <span th:text="${payment?.invoiceAmount}"></span></b></p>
+                <p><b>Total (R): <span th:text="${payment?.invoiceAmount}"></span></b></p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <b>
+            <h5>DISCLAIMER</h5>
+        </b>
+        <div style="font-size: 80%;">
+            <p>
+                The co ordinates in this data may not represent necessarily match the legal co ordinates as they appear
+                on the
+                Diagram
+                or General Plans. The proof of should be uploaded upon successful payments. All data will be supplied as
+                is.
+            </p>
+            <b>
+                <p style="margin-top: 40px;">Please give</p>
+            </b>
+            <b>
+                <p>Date : <span th:text="${#temporals.format(payment?.invoiceGenerationDate, 'dd/MMM/yyyy')}"></span>
+                </p>
+            </b>
+            <b>
+                <p>Rank : <u style="width: 40px;"></u></p>
+            </b>
+            <b>
+                <p>Signed By :</p>
+            </b>
+        </div>
+    </div>
+</div>
+</body>
+</html>

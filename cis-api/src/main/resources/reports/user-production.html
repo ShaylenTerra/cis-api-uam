@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        @page {
+
+            @bottom-left {
+                content: "Agriculture, Land Reform and Rural Development ";
+                vertical-align: top;
+                padding-top: 10px;
+            }
+
+            @bottom-center {
+                content: "User Production Report";
+                vertical-align: top;
+                padding-top: 10px;
+            }
+
+            @bottom-right {
+                content: counter(page) " of " counter(pages);
+            }
+            margin: 1cm;
+            size: 70cm 25cm;
+
+        }
+
+
+        .font {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table tr {
+            page-break-inside: avoid;
+        }
+
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+        }
+
+        #customers td,
+        #customers th {
+            border: 1px solid #888986;
+            padding: 8px;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #88B649;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .header {
+            color: #018000;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        #headerTable {
+            margin-bottom: 30px;
+        }
+
+        body {
+            line-height: 1.3;
+        }
+
+        img{border:0;}
+
+    </style>
+</head>
+<body>
+<div class="font">
+    <table id="headerTable">
+        <tr>
+            <td width="33.33%"><img alt="" height="100" src="logo.png">
+            </td>
+            <td width="33.33%"><p class="header">User Production Report</p></td>
+            <td width="33.33%"><img alt="image not found" height="100"
+                                    src="flag-sa.jpg"
+                                    style="float: right;"
+                                    width="200"></td>
+        </tr>
+    </table>
+
+    <div>
+        <div style="font-size: 80%;">
+            <p>
+                <b>Date From :</b>
+                <span th:text="${#temporals.format(request.fromDate, 'dd/MMM/yyyy')}"></span>
+            </p>
+            <p>
+                <b>Date To :</b>
+                <span th:text="${#temporals.format(request.toDate, 'dd/MMM/yyyy')}"></span>
+            </p>
+            <p>
+                <b>Province :</b>
+                <span th:text="${request.provinceName} ?: 'ALL'"></span>
+            </p>
+            <p>
+                <b>User Type :</b>
+                <span th:text="${request.userType} ?: 'ALL'"></span>
+            </p>
+        </div>
+
+    </div>
+    <div>
+        <table border="0px" id="customers" style="margin-top: 40px; -fs-table-paginate: paginate; border-spacing: 0;">
+            <thead>
+            <tr>
+                <th id="1-1" rowspan="2">
+                    <span>Reference Number</span>
+                </th>
+                <th id="2-1" rowspan="2">
+                    <span>Date Received</span>
+                </th>
+                <th id="3-1" rowspan="2">
+                    <span>Product Category</span>
+                </th>
+                <th id="4-1" rowspan="2" >
+                    <span>Product Item</span>
+                </th>
+                <th id="5-1" rowspan="2">
+                    <span>Product Quantity</span>
+                </th>
+                <th colspan="4" id="6-1" style="text-align: center">
+                    <span>Requester</span>
+                </th>
+
+                <th colspan="3"  id="10-1" style="text-align: center">
+                    <span>Officer</span>
+                </th>
+                <th id="13-1" rowspan="2">
+                    <span>Action Context</span>
+                </th>
+                <th id="14-1" rowspan="2">
+                    <span>Productivity (Minutes)</span>
+                </th>
+                <th id="15-1" rowspan="2">
+                    <span>Cost</span>
+                </th>
+                <th id="16-1" rowspan="2">
+                    <span>Invoice Number</span>
+                </th>
+                <th id="17-1" rowspan="2">
+                    <span>Status</span>
+                </th>
+            </tr>
+            <tr>
+
+                <th id="6" >
+                    <span>Name</span>
+                </th>
+                <th id="7" >
+                    <span>Type</span>
+                </th>
+                <th id="8" >
+                    <span>Role</span>
+                </th>
+                <th id="9" >
+                    <span>Sector</span>
+                </th>
+                <th id="10" >
+                    <span>Date Allocated</span>
+                </th>
+                <th id="11" >
+                    <span>Name</span>
+                </th>
+                <th id="12" >
+                    <span>Date Completed</span>
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="summary : ${data}">
+                <td th:text="${summary.referenceNumber}"></td>
+                <td th:text="${#dates.format(summary.dateReceived, 'dd/MMM/yyyy')}"></td>
+                <td th:text="${summary.productCategory}"></td>
+                <td th:text="${summary.productItem}"></td>
+                <td th:text="${summary.productQuantity}"></td>
+                <td th:text="${summary.requester}"></td>
+                <td th:text="${summary.requesterType}"></td>
+                <td th:text="${summary.requesterRole}"></td>
+                <td th:text="${summary.requesterSector}"></td>
+                <td th:text="${#dates.format(summary.dateAllocated, 'dd/MMM/yyyy')}"></td>
+                <td th:text="${summary.officer}"></td>
+                <td th:text="${#dates.format(summary.dateCompleted, 'dd/MMM/yyyy')}"></td>
+                <td th:text="${summary.actionContext}"></td>
+                <td th:text="${summary.productivityMinutes}"></td>
+                <td th:text="${summary.cost}"></td>
+                <td th:text="${summary.invoiceNumber}"></td>
+                <td th:text="${summary.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

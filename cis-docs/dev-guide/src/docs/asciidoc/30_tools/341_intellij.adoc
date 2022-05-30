@@ -1,0 +1,64 @@
+[[intellij]]
+#### Java IDE (IntelliJ)
+
+##### Installation
+
+. Download from https://www.jetbrains.com/idea/download/ and installation using defaults.
+. Useful Plugins (File -> Settings -> Plugins)
+.. Lombok
+.. AsciiDoc
+.. Checkstyle-IDEA
+.. MapStruct-Support
+
+##### Configuration
+
+<TODO> automatically insert via config-file in git possible?
+
+. Change encoding of text files +
+File -> Settings -> Editor -> File Encodings +
+_Global Encoding_ = UTF-8 and: _Project Encoding_ = UTF-8
+. Lombok-Configuration (File -> Settings -> Build, Execution, Deployment) -> Compiler -> Annotation Processing: _Enable annotation processing_ = checked
+. Checkstyle-Configuration (File -> Settings -> Other Settings -> Checkstyle):
+.. _Add Configuration File_ -> Local File.
+Config_Loc Entry: ./
+.. _Scan Scope_: Only Java sources (including tests)
+.. _Treat Checkstyle errors as warnings_: false/unchecked
+.. _Active_: checked
+. Avoid Star-Imports (e.g. because of Checkstyle-Rules): File -> Settings -> Editor -> Code Style -> Java -> Imports: +
+.. _Class Count to use import with *_ = 20
+. Automatically organize imports: File -> Settings -> Editor -> General -> Auto Import: +
+.. _Add unambigious imports on the fly_ = checked +
+.. _Optimize imports on the fly (for current project)_ = checked +
+. Projekt SDK and Language Level +
+File -> Project Structure -> Project Settings -> Project +
+_Project SDK_ = 1.8 +
+_Project language level_ = 8
+. Pull with bitbucket: Rebase and Stash
+
+##### Import/Open Projects
+
+. File -> Open .. in IntelliJ
+. Choose root folder of project
+. _Import Project from external model_ = Gradle
+. Import dialog settings
+.. _Use auto-import_ = TRUE
+.. _Create directories for empty content roots automatically_ = FALSE
+.. _Create separate module per source set_ = FALSE
+.. _Store generated project files externally_ = FALSE
+
+If the message comes up 'Unregistered VCS root detected' choose: 'Add root'
+
+##### Known issues and solutions/workarounds
+
+Output-folder of gradle and intellij differ which leads to duplicate files errors (see link on link:https://stackoverflow.com/questions/45174989/building-with-intellij-2017-2-out-directory-duplicates-files-in-build-director/46035904#46035904[SO]).
+
+What you can do:
+
+* Delegate IDE build to gradle: Every build in Intellij will be execute by underlying gradle
+** Set here: Settings -> Build, Execution, Deployment ->Build Tools -> Gradle -> Runner
+** Disadvantage: Builds are much slower in Intellij
+* Set same output folder (e.g. via gradle)
+** Disadvantage: simply did not work smooth.
+There were a lot of issues afterwards, e.g. building in gradle incl. the UI needed different copy targets for UI than in Intellij build.
+* Leave everything as is: if building in Intellij you get folder _out_, in gradle you get folder _build_.
+If they are overlapping, delete the one folder that is not needed.

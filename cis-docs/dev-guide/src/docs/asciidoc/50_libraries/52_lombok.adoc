@@ -1,0 +1,30 @@
+[[lombok]]
+=== Lombok
+
+==== Why do we use it?
+
+You can create getters and setters via the IDE, but if one class is changed, you have to regenerate the sources for getters and setters again.
+
+==== Example
+
+[source,java]
+----
+...
+import lombok.Data;
+...
+
+@Entity
+@Table(name = "MYENTITY")
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class MyEntityJpa extends BaseJpa {
+
+	private MyEnum status;
+
+}
+
+----
+
+==== References
+
+* Homepage of Lombok: https://projectlombok.org

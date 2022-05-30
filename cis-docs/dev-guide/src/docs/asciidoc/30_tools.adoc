@@ -1,0 +1,15 @@
+[[tools]]
+== Toolchain
+
+During development, we make use of numerous tools to increase productivity.
+All major used tools including their installation and usage are described in the following sections.
+
+include::30_tools/31_java.adoc[]
+
+include::30_tools/32_git.adoc[]
+
+include::30_tools/33_buildsupport.adoc[]
+
+include::30_tools/34_ide.adoc[]
+
+include::30_tools/36_requirements.adoc[]

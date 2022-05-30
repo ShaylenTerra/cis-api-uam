@@ -1,0 +1,23 @@
+[[firststeps]]
+== First Steps
+
+=== Code- and Document storage
+
+. Repository for sourcecode and documents: +
+https://bitbucket.org/harvesting/cis-api-uam.git
+
+=== Technical Details to get to work (Getting Started Guide)
+
+. Installation of git (see <<git,Git>>)
+. Configuration of main software packages for development
+.. <<java,Java>>
+.. <<gradle,Gradle>>
+.. <<configuration,Configuration>> for starting the backend
+
+For creating the documentation, the following tools are needed:
+
+. Java
+. Gradle
+
+Finally, read through the list of short <<libraries,introductions>> and some hints about frameworks and technology used in this project.
+

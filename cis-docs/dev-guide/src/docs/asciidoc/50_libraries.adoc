@@ -1,0 +1,15 @@
+[[libraries]]
+== Libraries, Frameworks, etc.
+
+During development, we make use of numerous 3rd party libraries and frameworks to increase productivity.
+The most importent of them are described in the following sections.
+
+Any new library shall be discussed in detail, especially in frontend there are so many libraries that might be usable, but they all need to be checked for the possibility to style them according to our guidelines and to be capable of i18n.
+
+include::50_libraries/51_spring.adoc[]
+
+include::50_libraries/52_lombok.adoc[]
+
+include::50_libraries/54_mapstruct.adoc[]
+
+include::50_libraries/59_validation.adoc[]

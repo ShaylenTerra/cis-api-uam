@@ -1,0 +1,53 @@
+[[validation]]
+=== Validation of inputs
+
+Validation of inputs must be ensured on frontend and backend side!
+The following libraries are used for this:
+
+. Frontend: vee-validate
+
+==== Backend Example
+
+[source,java]
+----
+public class MyEntityJpa extends BaseJpa {
+
+  private static final int PRECISION_PRICE = 15;
+  private static final int SCALE_PRICE = 2;
+
+  @NotNull
+  private String ident;
+
+  @NotNull
+  @Digits(integer = PRECISION_PRICE, fraction = SCALE_PRICE)
+  private BigDecimal price;
+}
+----
+
+The validation of these values is then performed by the class EntityValidator.
+
+[source,java]
+----
+public class MyService {
+
+  @Autowired
+  private EntityValidator<MyEntityJpa> validator;
+
+  ..
+  validator.validate(lmJpa);
+  ..
+}
+----
+
+The validate method throws a BadRequest Exception automatically which must not be touched by the service method and be returned to the requestor.
+This is intentionally like this because:
+
+. Every error message should be localised in the client while the backend is language agnostic and stateless.
+. Every details about failing validation and about its details is a security flaw.
+See also OWASP guides on this.
+Every client is responsible for correct input and according messages in case of errors.
+
+==== References
+
+* Homepage of Bean-Validation: https://docs.oracle.com/javaee/6/tutorial/doc/gircz.html
+* Homepage OWASP with Cheat-Sheet for Input-Validation: https://www.owasp.org/index.php/Input_Validation_Cheat_Sheet

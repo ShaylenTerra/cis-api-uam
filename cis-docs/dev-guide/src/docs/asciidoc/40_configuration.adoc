@@ -1,0 +1,25 @@
+[[configuration]]
+== Configuration
+
+Configuration is performed via spring profiles.
+For local configuration please copy the application-default.sample.properties to application-default.properties and replace the configuration entries you wish to change locally.
+For example, the used profile is set via: spring.profiles.active = <profile to use e.g. dev>.
+
+Moreover all passwords need to be included in this file, e.g. spring.datasource.password = <the password for the datasource>
+
+This convention is used to prevent committing of passwords to the git and to have a separate configuration for each and every stage (dev, test, prod, etc.)
+
+=== Example for development
+
+. Copy src/main/resources/application-default.sample.properties to src/main/resources/application-default.properties and change the following values in target file.
+.. Set _spring.profiles.active_ to _dev_
+.. Fill all placeholders (marked with '<' and '>').
+
+=== Example for testing
+
+. Copy src/test/resources/application-default.sample.properties to src/test/resources/application-default.properties and change the following values in target file.
+.. Set _spring.profiles.active_ to _dev-test_
+.. Fill all placeholders (marked with '<' and '>').
+
+By using a dedicated configuration in src/test/resources you can leave your configuration in src/main/resources as-is and execute application and tests without changing properties all the time.
+Simple use a different gradle task or Intellij run configuration for running application or testing it.

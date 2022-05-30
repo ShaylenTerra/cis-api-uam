@@ -1,0 +1,20 @@
+[[gradle]]
+#### Java Dependency Management (gradle)
+
+##### Installation
+
+. Download from https://gradle.org/install/ (minimum version 4.9) and manual installation using defaults.
+
+##### Usage
+
+To Build a project navigate to directory where gradle.build-file resides and type: +
+gradle clean build
+
+To skip tests: +
+gradle clean build -x test
+
+To skip frontend build (and tests): +
+gradle clean build -x test
+
+To build a project in a subdirectory (here some-app): +
+gradle clean build -b ./some-app/build.gradle

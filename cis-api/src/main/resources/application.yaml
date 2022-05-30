@@ -1,0 +1,157 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/pdf,application/octet-stream,text/csv,image/jpeg,images/png,image/gif
+    min-response-size: 10KB
+  port: ${SERVER_PORT:8088}
+  servlet:
+    encoding:
+      charset: utf-8
+      force-response: true
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: [ 'configprops', 'env', 'health', 'info', 'logfile', 'loggers', 'threaddump' ]
+  endpoint:
+    health:
+      show-details: always
+  info:
+    git:
+      mode: full
+  health:
+    mail:
+      enabled: true
+spring:
+  application:
+    name: CisUamNew
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    properties:
+      hibernate.format_sql: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      # modify fetch size as necessary
+      hibernate.jdbc.fetch_size: 150
+      hibernate.criteria.literal_handling_mode: BIND
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+      hibernate.event.merge.entity_copy_observer: allow
+      org.hibernate.envers.audit_table_siffix: _HISTORY_LOG
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+  mail:
+    host: smtp.gmail.com
+    username: drdlrcis@gmail.com
+    password: zjpkebcbuoepuxqw
+    port: 587
+    properties:
+      mail.debug: false
+      mail.smtp.auth: true
+      mail.ssl.enabled: true
+      mail.starttls.enable: true
+      mail.transport.protocol: smtp
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  servlet:
+    multipart:
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+  thymeleaf:
+    check-template-location: false
+springfox:
+  documentation:
+    swagger:
+      v2:
+        enabled: true
+
+security:
+  oauth2:
+    resource:
+      filter-order: 3
+
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# ===================================================================
+
+app:
+  file-storage:
+    storage-location: ${HOME:C:\cis-uam-upload-files\app\cis}
+  ftp:
+    password: Dbnadmin@2019
+    port: 1021
+    server: 102.134.121.70
+    user: Administrator
+  security:
+    excluded-api-url: [ "/api/v1/list-master/**",
+                        "/api/v1/province/list",
+                        "/actuator/**","/api-docs/**",
+                        "/api/v1/user/register",
+                        "/api/v1/user/emailAvailability",
+                        "/api/v1/user/verifyProfessional",
+                        "/api/v1/user/verifyUsername",
+                        "/api/v1/user/listSecurityQuestions",
+                        "/api/v1/user/resetForgotPassword/**",
+                        "/api/v1/template/61",
+                        "/api/v1/user/verifySecurityAnswers",
+                        "/api/v1/user/resetForgotPassword/**",
+                        "/api/v1/workflow/seachByReference/**",
+                        "/api/v1/workflow/notifications/**"]
+    excluded-oauth-url: [ "/oauth/**" ]
+  jwt:
+    access-token-validity-seconds: 3600
+    refresh-token-validity-seconds: 36000
+    security-realm: cis-api
+  sms:
+    base-url: http://193.105.74.59/api/sendsms/plain?
+    password: sm$Dat@W0r1d
+    sender: Xcallibre
+    username: smsDataworld
+  swagger:
+    auth-server-url: http://localhost:8088/oauth
+    client-id: cis-swagger-uat
+    client-secret: XY7kmzoNzl100
+    contact: ''
+    description: CIS Api
+    license: ''
+    license-url: ''
+    terms-of-service-url: ''
+    title: CIS API
+    version: ''
+
+cis-emailer:
+  mail:
+    #bcc: gairola.arvind@gmail.com,phila@dataworld.co.za,boipelo@dataworld.co.za,sello@dataworld.co.za,goelpratee@gmail.com,pragayanshu@terra.group
+    #email-from: noreply@cis.com
+    bcc: rorisang@terra.group,nontokozo@terra.group,shaylen@terra.group
+    email-from: noreply@cis.com

@@ -1,0 +1,84 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@10.10.20.200:1521:sgtrndb
+    username: sguser
+    password: sguser12
+    hikari:
+      data-source-properties:
+        oracle.net.timeout: 10000
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: cis-db-pool
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+  ldap:
+    embedded:
+      validation:
+        enabled: false
+  mail:
+    host: 10.10.20.205
+    username: mdb@dataworld.co.za
+    password: Dw#$SMTP
+    port: 25
+    properties:
+      mail.debug: false
+      mail.smtp.auth: true
+      mail.ssl.enabled: true
+      mail.starttls.enable: true
+      mail.transport.protocol: smtp
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the JHipsterProperties above
+#
+# ===================================================================
+app:
+  file-storage:
+    storage-location: /u01/cis-uam-upload-files/app/cis
+  ldap:
+    group-search-base: DC=CHIEFSG,DC=GOV,DC=ZA
+    password: Launcher@Ngms01
+    url: ldap://10.10.31.30
+    user-search-filter: sAMAccountName={0}
+    user-search-base: DC=CHIEFSG,DC=GOV,DC=ZA
+    user-dn: cis-admin
+    referral: follow
+  ftp:
+    password: CIS@dm!N$#
+    port: 21
+    server: 10.10.20.205
+    user: ftp_user
+cis-search:
+  image-prefix-path:
+    thumbnail-prefix: http://10.10.20.210/CSGGIS/CSGTIF/CIS_Latest_Images_ThumbNails/
+    preview-prefix: http://10.10.20.210/CSGGIS/CSGTIF/
+    url-prefix: http://10.10.20.210/CSGGIS/CSGTIF/
+cis-emailer:
+  mail:
+    bcc: gairola.arvind@gmail.com,phila@dataworld.co.za,boipelo@dataworld.co.za,sello@dataworld.co.za,prateek@harvesting.co,pragayanshu@terra.group,Adhir.Nursayhe@dalrrd.gov.za
+    email-from: cis@dalrrd.gov.za
+

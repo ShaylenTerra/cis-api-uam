@@ -1,0 +1,10 @@
+[[java]]
+### Java
+
+#### Installation
+
+. Download and Installation with default settings - use version 1.8 (e.g. Update 101 or newer)
+
+#### Konfiguration
+
+. Set Environment variable: JAVA_HOME = <Path to JDK-Root> (e.g. JAVA_HOME=C:\Java\jdk1.8.0_102)

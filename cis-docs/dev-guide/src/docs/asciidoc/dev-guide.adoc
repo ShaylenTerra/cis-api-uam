@@ -1,0 +1,28 @@
+:chapter-label:
+:doctype: book
+:linkcss:
+:source-highlighter: coderay
+:numbered:
+:icons: font
+:toc:
+:status: Work-In-Progress
+:date: 30th January 2019
+:author: harvesting.co
+
+= Developer Guide CIS
+
+Version: 0.3, {date} <{status}>
+
+
+[[dev-guide]]
+include::10_introduction.adoc[]
+
+include::20_first_steps.adoc[]
+
+include::30_tools.adoc[]
+
+include::40_configuration.adoc[]
+
+include::50_libraries.adoc[]
+
+include::70_environments.adoc[]

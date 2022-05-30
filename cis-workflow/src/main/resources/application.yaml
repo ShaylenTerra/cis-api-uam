@@ -1,0 +1,52 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    #url: jdbc:oracle:thin:@10.1.15.219:1521:CISDEV
+    url : jdbc:oracle:thin:@10.1.15.219:1521:CISJHBDEV
+    username: sguser
+    #password: sguser123
+    password: sguser12
+    hikari:
+      data-source-properties:
+        oracle.net.timeout: 10000
+  application:
+    name: cis-workflow
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    properties:
+      hibernate.format_sql: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      # modify fetch size as necessary
+      hibernate.jdbc.fetch_size: 150
+      hibernate.criteria.literal_handling_mode: BIND
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+      hibernate.event.merge.entity_copy_observer: allow
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+  mail:
+    host: smtp.gmail.com
+    username: drdlrcis@gmail.com
+    password: zjpkebcbuoepuxqw
+    port: 587
+
+server:
+  port: 8089
+
+cis-emailer:
+  mail:
+    #bcc: gairola.arvind@gmail.com,phila@dataworld.co.za,boipelo@dataworld.co.za,sello@dataworld.co.za,prateek@harvesting.co,pragayanshu@terra.group
+    #email-from: noreply@cis.com
+    bcc: rorisang@terra.group,nontokozo@terra.group,shaylen@terra.group
+    email-from: noreply@cis.com

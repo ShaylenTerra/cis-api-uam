@@ -1,0 +1,28 @@
+[[git]]
+### Version Control System (git)
+
+#### Installation
+
+. git
+.. Download from https://git-scm.com/downloads and Installation with defaults
+
+#### Create local working copy
+
+. Create directory, e.g. C:\git_repo
+. Git Clone (e.g. via git-bash): git clone https://bitbucket.org/harvesting/cis-api-uam.git
+
+#### Prepare push to central bitbucket
+
+For pushing to central bitbucket, you need to upload your local ssh *PUBLIC* key.
+
+See this guide https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key to create the public/private key pair.
+
+After you have generated both, navigate to the directory ~/.ssh and copy the content of file id_rsa.pub into clipboard (starts with 'ssh-rsa <your-key-characters>' and ends with 'RSA-1024').
+).
+
+After this, login into bitbucket's web interface https://bitbucket.com/harvesting/cis-api-uam and change the URL (after successful login) to https://bitbucket.com/profile/keys.
+Paste your public key and click 'Add key'.
+
+#### Usage
+
+. Pull: We use Rebase and not Merge-Commits

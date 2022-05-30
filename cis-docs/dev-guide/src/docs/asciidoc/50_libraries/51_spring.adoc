@@ -1,0 +1,58 @@
+[[spring]]
+=== Spring Framework
+
+Spring is used as component framework, for application bootstrapping, etc.
+
+==== Why do we use it?
+
+We use spring to automate tedious task and make the code clearer: +
+
+. Zero-XML-Configuration with Spring Boot +
+. Autowiring for Dependency Injection +
+. Spring Data JPA for database access +
+
+==== Example
+
+[source,java]
+----
+...
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+...
+
+@Repository
+public interface MyEntityRepository extends CrudRepository<MyEntityJpa, Long> {
+
+}
+
+----
+
+A service can use this as following:
+
+[source,java]
+----
+...
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+...
+
+@Service
+public class MyService {
+
+    @Autowired
+    private MyEntityRepository repo;
+
+	...
+
+    public Response getMyEntity(final @PathParam("id") String id) {
+        MyEntityJpa resultJpa = repo.findOne(Long.valueOf(id));
+    }
+}
+
+----
+
+==== References
+
+* Homepage of Spring: http://spring.io/
+* Article with introductory information: https://dzone.com/articles/spring-data-series-spring-data-in-nutshell
+

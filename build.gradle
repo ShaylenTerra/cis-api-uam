@@ -1,0 +1,86 @@
+allprojects {
+    group 'com.dw.ngms'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://repo.spring.io/plugins-release" }
+    }
+
+}
+
+buildscript {
+    ext {
+        springBootVersion = '2.5.4'
+        javaLanguageLavel = '1.8'
+        lombokVersion = "1.18.4"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE")
+    }
+}
+
+subprojects {
+
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    apply plugin: 'checkstyle'
+    checkstyle {
+        toolVersion "8.36.1"
+        sourceSets = []
+        configFile = file("${project.rootDir}/config/checkstyle.xml")
+    }
+
+    tasks.withType(Checkstyle) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+            html {
+                destination file("${rootProject.projectDir}/checkstyle-reports/${project.name}.html")
+            }
+        }
+    }
+
+    sourceCompatibility = javaLanguageLavel
+    targetCompatibility = javaLanguageLavel
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+    }
+
+}
+
+
+task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all child projects as if it was a single project', group: 'Documentation') {
+    destinationDir = file("$buildDir/docs/javadoc")
+    title = "$project.name $version API"
+    options.author true
+    options.links 'http://docs.spring.io/spring/docs/5.3.8/javadoc-api/',
+            'http://docs.oracle.com/javase/8/docs/api/',
+            'https://docs.spring.io/spring-security/site/docs/5.5.1/api/'
+    options.addStringOption 'Xdoclint:none', '-quiet'
+
+    subprojects.each { proj ->
+        proj.tasks.withType(Javadoc).each { javadocTask ->
+            source += javadocTask.source
+            classpath += javadocTask.classpath
+            excludes += javadocTask.excludes
+            includes += javadocTask.includes
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+        "suppressions_1_1.dtd">
+
+<suppressions>
+
+    <!-- Suppress the following rules in unit tests -->
+    <suppress checks="MagicNumber" files="[\\/]test[\\/].*[\\/]"/>
+    <suppress checks="MethodName" files="[\\/]test[\\/].*[\\/]"/>
+    <suppress checks="VisibilityModifier" files="[\\/]test[\\/].*[\\/]"/>
+
+    <!-- Suppress all checks in generated sources -->
+    <suppress checks=".*" files="[\\/]target[\\/]generated"/>
+    <suppress checks=".*" files="[\\/]build[\\/]generated"/>
+    <suppress checks=".*" files="[\\/]out[\\/]generated"/>
+
+</suppressions>
