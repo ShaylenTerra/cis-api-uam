@@ -2,9 +2,11 @@ package com.dw.ngms.cis.web.rest;
 
 import com.dw.ngms.cis.configuration.AppConstants;
 import com.dw.ngms.cis.persistence.domains.examination.Examination;
-import com.dw.ngms.cis.service.Examination.ExaminationService;
+import com.dw.ngms.cis.service.examination.ExaminationService;
 import com.dw.ngms.cis.service.dto.Examination.ExaminationDto;
+import com.dw.ngms.cis.service.dto.examination.ExaminationAllocatedUsersDto;
 import com.dw.ngms.cis.service.dto.province.ProvinceDto;
+import com.dw.ngms.cis.service.examination.ExaminationAllocatedUsersService;
 import com.dw.ngms.cis.web.annotation.ApiPageable;
 import com.dw.ngms.cis.web.annotation.BaseResponse;
 import com.dw.ngms.cis.web.util.PaginationUtil;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @BaseResponse
@@ -54,6 +57,26 @@ public class ExaminationResource {
 //        return examinationService.deleteExam(ExamId);
 //
 //    }
+
+    @GetMapping("/getAllocatedUser")
+    public ResponseEntity<ExaminationAllocatedUsersDto> getAllocatedUser(@RequestParam @NotNull final Long examinationId){
+        return ResponseEntity.ok().body(examinationService.getExaminationAllocatedUsersById(examinationId));
+    }
+
+    @PostMapping("/addNewAllocatedUser")
+    public ResponseEntity<ExaminationAllocatedUsersDto> addNewAllocatedUser(@RequestBody final ExaminationAllocatedUsersDto examinationAllocatedUsersDto){
+        return ResponseEntity.ok().body(examinationService.addNewExaminationAllocatedUser(examinationAllocatedUsersDto));
+    }
+
+    @PostMapping("/updateAllocatedUser")
+    public ResponseEntity<ExaminationAllocatedUsersDto> updateAllocatedUser(@RequestBody final ExaminationAllocatedUsersDto examinationAllocatedUsersDto){
+        return ResponseEntity.ok().body(examinationService.updateExaminationAllocatedUsers(examinationAllocatedUsersDto));
+    }
+
+    @DeleteMapping("/deleteAllocatedUser")
+    public void deleteAllocatedUser(@RequestParam @NotNull final Long examinationId){
+        examinationService.deleteExaminationAllocatedUsers(examinationId);
+    }
 }
 
 
