@@ -1,12 +1,16 @@
-package com.dw.ngms.cis.service.Examination;
+package com.dw.ngms.cis.service.examination;
 import com.dw.ngms.cis.persistence.domains.examination.Examination;
+import com.dw.ngms.cis.persistence.domains.examination.ExaminationAllocatedUsers;
 import com.dw.ngms.cis.persistence.domains.province.ProvinceAddress;
 import com.dw.ngms.cis.persistence.domains.user.SecurityUser;
+import com.dw.ngms.cis.persistence.repository.examination.ExaminationAllocatedUsersRepository;
 import com.dw.ngms.cis.persistence.repository.examination.ExaminationRepository;
 import com.dw.ngms.cis.security.CurrentLoggedInUser;
 import com.dw.ngms.cis.service.dto.Examination.ExaminationDto;
+import com.dw.ngms.cis.service.dto.examination.ExaminationAllocatedUsersDto;
 import com.dw.ngms.cis.service.dto.province.ProvinceAddressDto;
 import com.dw.ngms.cis.service.mapper.Examination.ExaminationMapper;
+import com.dw.ngms.cis.service.mapper.examination.ExaminationAllocatedUsersMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +33,11 @@ public class ExaminationService {
     private final CurrentLoggedInUser currentLoggedInUser;
 
     private final ExaminationMapper examinationMapper;
+
+    private final ExaminationAllocatedUsersMapper examinationAllocatedUsersMapper;
+
+    private final ExaminationAllocatedUsersRepository examinationAllocatedUsersRepository;
+
     public Page<ExaminationDto> getAllExamination(final Pageable pageable){
 
         SecurityUser user = currentLoggedInUser.getUser();
@@ -99,5 +110,55 @@ public class ExaminationService {
 //        }
 //        return null;
 //    }
+
+    public ExaminationAllocatedUsersDto getExaminationAllocatedUsersById(Long examinationId){
+
+        ExaminationAllocatedUsers examinationAllocatedUsers = examinationAllocatedUsersRepository.findAllocatedUserByExamAllocatedId(examinationId);
+        ExaminationAllocatedUsersDto examinationAllocatedUsersDto = examinationAllocatedUsersMapper.ExaminationAllocatedUsersToExaminationAllocatedUsersDto(examinationAllocatedUsers);
+        return examinationAllocatedUsersDto;
+    }
+
+    public ExaminationAllocatedUsersDto addNewExaminationAllocatedUser(ExaminationAllocatedUsersDto examinationAllocatedUsersNew){
+
+        /*ExaminationAllocatedUsers examinationAllocatedUsers = new ExaminationAllocatedUsers();
+        examinationAllocatedUsers.setScrutinizerId(examinationAllocatedUsersNew.getScrutinizerId());
+        examinationAllocatedUsers.setExaminerId(examinationAllocatedUsersNew.getExaminerId());
+        examinationAllocatedUsers.setUpdatedByUserId(examinationAllocatedUsersNew.getUpdatedByUserId());
+        examinationAllocatedUsers.setModifiedDate(examinationAllocatedUsersNew.getModifiedDate());
+        examinationAllocatedUsers.setCreateDate(examinationAllocatedUsersNew.getCreateDate());
+        examinationAllocatedUsers.setComments(examinationAllocatedUsersNew.getComments());
+        examinationAllocatedUsers.setExamId(examinationAllocatedUsersNew.getExamId());*/
+
+        LocalDateTime date = LocalDateTime.now();
+        examinationAllocatedUsersNew.setCreateDate(date);
+        examinationAllocatedUsersNew.setModifiedDate(date);
+
+        ExaminationAllocatedUsers examinationAllocatedUsers = examinationAllocatedUsersMapper.ExaminationAllocatedUsersDtoToExaminationAllocatedUsers(examinationAllocatedUsersNew);
+        examinationAllocatedUsersRepository.save(examinationAllocatedUsers);
+        ExaminationAllocatedUsersDto examinationAllocatedUsersDto = examinationAllocatedUsersMapper.ExaminationAllocatedUsersToExaminationAllocatedUsersDto(examinationAllocatedUsers);
+        return examinationAllocatedUsersDto;
+    }
+
+    public ExaminationAllocatedUsersDto updateExaminationAllocatedUsers(ExaminationAllocatedUsersDto examinationAllocatedUsersUpdated){
+
+        ExaminationAllocatedUsers examinationAllocatedUsers = examinationAllocatedUsersRepository.findAllocatedUserByExaminationId(examinationAllocatedUsersUpdated.getExamId());
+
+        examinationAllocatedUsers.setScrutinizerId(examinationAllocatedUsersUpdated.getScrutinizerId());
+        examinationAllocatedUsers.setExaminerId(examinationAllocatedUsersUpdated.getExaminerId());
+        examinationAllocatedUsers.setUpdatedByUserId(examinationAllocatedUsersUpdated.getUpdatedByUserId());
+        //examinationAllocatedUsers.setCreateDate(examinationAllocatedUsersUpdated.getCreateDate());
+        examinationAllocatedUsers.setComments(examinationAllocatedUsersUpdated.getComments());
+        examinationAllocatedUsers.setExamId(examinationAllocatedUsersUpdated.getExamId());
+        LocalDateTime date = LocalDateTime.now();
+        examinationAllocatedUsers.setModifiedDate(date);
+        examinationAllocatedUsersRepository.save(examinationAllocatedUsers);
+
+        return examinationAllocatedUsersMapper.ExaminationAllocatedUsersToExaminationAllocatedUsersDto(examinationAllocatedUsers);
+    }
+
+    public void deleteExaminationAllocatedUsers(Long examinationId){
+        ExaminationAllocatedUsers examinationAllocatedUsers = examinationAllocatedUsersRepository.findAllocatedUserByExaminationId(examinationId);
+        examinationAllocatedUsersRepository.deleteById(examinationAllocatedUsers.getExamAllocatedId());
+    }
 
 }
