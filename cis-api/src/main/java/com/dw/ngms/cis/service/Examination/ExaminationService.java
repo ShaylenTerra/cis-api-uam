@@ -6,11 +6,12 @@ import com.dw.ngms.cis.persistence.domains.user.SecurityUser;
 import com.dw.ngms.cis.persistence.repository.examination.ExaminationAllocatedUsersRepository;
 import com.dw.ngms.cis.persistence.repository.examination.ExaminationRepository;
 import com.dw.ngms.cis.security.CurrentLoggedInUser;
-import com.dw.ngms.cis.service.dto.Examination.ExaminationDto;
 import com.dw.ngms.cis.service.dto.examination.ExaminationAllocatedUsersDto;
+import com.dw.ngms.cis.service.dto.examination.ExaminationDto;
 import com.dw.ngms.cis.service.dto.province.ProvinceAddressDto;
-import com.dw.ngms.cis.service.mapper.Examination.ExaminationMapper;
+import com.dw.ngms.cis.service.mapper.examination.ExaminationMapper;
 import com.dw.ngms.cis.service.mapper.examination.ExaminationAllocatedUsersMapper;
+import com.dw.ngms.cis.service.mapper.examination.ExaminationMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,18 @@ public class ExaminationService {
 
     }
 
+    public ExaminationDto getExaminationById(Long examinationId){
+        Examination examination = examinationRepository.getById(examinationId);
+        ExaminationDto examinationDto = examinationMapper.examinaionToExaminationDto(examination);
+        return examinationDto;
+    }
+
+    public ExaminationDto getExaminationByWorkflowId(Long workflowId){
+        Examination examination = examinationRepository.getExaminationByWorkflowId(workflowId);
+        ExaminationDto examinationDto = examinationMapper.examinaionToExaminationDto(examination);
+        return examinationDto;
+    }
+
     public ExaminationDto saveExam(final ExaminationDto examinationDto) {
         Examination examination = examinationMapper.examinationDtoToExamination(examinationDto);
 
@@ -64,6 +77,8 @@ public class ExaminationService {
 
         int checkRole = examinationRepository.CheckExam(examinationDto.getName());
         if (checkRole == 0) {
+            LocalDateTime date = LocalDateTime.now();
+            examinationDto.setCreatedDate(date);
             Examination examination = examinationMapper.examinationDtoToExamination(examinationDto);
             Examination savedExam= examinationRepository.save(examination);
 

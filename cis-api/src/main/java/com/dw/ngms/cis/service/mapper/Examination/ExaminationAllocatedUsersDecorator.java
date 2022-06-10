@@ -1,5 +1,9 @@
 package com.dw.ngms.cis.service.mapper.examination;
 
+/**
+ * @author Shaylen Budhu on 30-05-2022
+ */
+
 import com.dw.ngms.cis.persistence.domains.examination.ExaminationAllocatedUsers;
 import com.dw.ngms.cis.service.dto.examination.ExaminationAllocatedUsersDto;
 

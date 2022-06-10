@@ -1,11 +1,10 @@
 package com.dw.ngms.cis.service.dto.examination;
 
-import lombok.Data;
+/**
+ * @author Shaylen Budhu on 30-05-2022
+ */
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data

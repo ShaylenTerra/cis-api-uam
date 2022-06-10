@@ -1,28 +1,21 @@
 package com.dw.ngms.cis.web.rest;
 
 import com.dw.ngms.cis.configuration.AppConstants;
-import com.dw.ngms.cis.persistence.domains.examination.Examination;
 import com.dw.ngms.cis.service.examination.ExaminationService;
-import com.dw.ngms.cis.service.dto.Examination.ExaminationDto;
+import com.dw.ngms.cis.service.dto.examination.ExaminationDto;
 import com.dw.ngms.cis.service.dto.examination.ExaminationAllocatedUsersDto;
-import com.dw.ngms.cis.service.dto.province.ProvinceDto;
-import com.dw.ngms.cis.service.examination.ExaminationAllocatedUsersService;
 import com.dw.ngms.cis.web.annotation.ApiPageable;
 import com.dw.ngms.cis.web.annotation.BaseResponse;
-import com.dw.ngms.cis.web.util.PaginationUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 
 @BaseResponse
 @RestController
@@ -39,7 +32,17 @@ public class ExaminationResource {
         return ResponseEntity.ok().body(allExams.getContent());
     }
 
-    @PostMapping("/create")
+    @GetMapping("/getExaminationById")
+    public ResponseEntity getExaminationById(@RequestParam @NotNull final Long examinationId){
+        return ResponseEntity.ok().body(examinationService.getExaminationById(examinationId));
+    }
+
+    @GetMapping("/getExaminationByWorkflowId")
+    public ResponseEntity getExaminationByWorkflowId(@RequestParam @NotNull final Long workflowId){
+        return ResponseEntity.ok().body(examinationService.getExaminationByWorkflowId(workflowId));
+    }
+
+    @PostMapping("/saveExamination")
     public ResponseEntity<ExaminationDto>  createRole(@Valid @RequestBody ExaminationDto examinationDto)
     {
         return ResponseEntity.ok(examinationService.addExam(examinationDto));

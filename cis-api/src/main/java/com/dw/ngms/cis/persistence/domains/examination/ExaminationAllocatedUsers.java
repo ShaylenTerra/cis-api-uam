@@ -1,5 +1,9 @@
 package com.dw.ngms.cis.persistence.domains.examination;
 
+/**
+ * @author Shaylen Budhu on 30-05-2022
+ */
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

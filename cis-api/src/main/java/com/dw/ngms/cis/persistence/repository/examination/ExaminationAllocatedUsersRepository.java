@@ -4,6 +4,10 @@ import com.dw.ngms.cis.persistence.domains.examination.ExaminationAllocatedUsers
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+/**
+ * @author Shaylen Budhu on 30-05-2022
+ */
+
 public interface ExaminationAllocatedUsersRepository extends JpaRepository<ExaminationAllocatedUsers, Long> {
 
     @Query("SELECT E FROM ExaminationAllocatedUsers E WHERE E.examId=?1")

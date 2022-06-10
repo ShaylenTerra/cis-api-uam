@@ -75,7 +75,7 @@ public class WorkflowProcessingService {
 
     public Map<String, Object> generateAction(TriggerRequest triggerRequest, Map<String, Object> workflowProcessDetails) throws Exception {
         Transactions transactions = createTransactionObject(triggerRequest);
-        //this.transactionsRepository.saveAndFlush(transactions);
+        this.transactionsRepository.saveAndFlush(transactions);
         Configuration config = objectMapper.readValue((String) workflowProcessDetails.get("Configuration"), Configuration.class);
         Node triggeredNode = config.getTriggerNode();
         Node nextNode = config.getNextNode(triggeredNode);

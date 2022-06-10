@@ -1,7 +1,7 @@
-package com.dw.ngms.cis.service.mapper.Examination;
+package com.dw.ngms.cis.service.mapper.examination;
 
 import com.dw.ngms.cis.persistence.domains.examination.Examination;
-import com.dw.ngms.cis.service.dto.Examination.ExaminationDto;
+import com.dw.ngms.cis.service.dto.examination.ExaminationDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
