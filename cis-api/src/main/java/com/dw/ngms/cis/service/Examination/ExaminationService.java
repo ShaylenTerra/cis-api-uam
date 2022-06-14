@@ -76,7 +76,7 @@ public class ExaminationService {
 
 
         int checkRole = examinationRepository.CheckExam(examinationDto.getName());
-        if (checkRole == 0) {
+       // if (checkRole == 0) {
             LocalDateTime date = LocalDateTime.now();
             examinationDto.setCreatedDate(date);
             Examination examination = examinationMapper.examinationDtoToExamination(examinationDto);
@@ -84,10 +84,10 @@ public class ExaminationService {
 
             return examinationMapper.examinaionToExaminationDto(savedExam);
 
-        }
-        else {
-            return null;
-        }
+       // }
+       // else {
+           // return null;
+        //}
 
 
     }

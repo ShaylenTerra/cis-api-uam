@@ -21,8 +21,8 @@ import javax.persistence.*;
 public class DiagramDocket {
 
     @Id
-    @GeneratedValue(generator = "exam_allocated_user_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "exam_allocated_user_seq",sequenceName = "EXAM_DIAGR_DOCKET", allocationSize = 1)
+    @GeneratedValue(generator = "exam_diagram_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "exam_diagram_seq",sequenceName = "EXAM_DIAGR_DOCKET", allocationSize = 1)
     @Column(name = "DIAGRAMID")
     private Long diagramId;
 
