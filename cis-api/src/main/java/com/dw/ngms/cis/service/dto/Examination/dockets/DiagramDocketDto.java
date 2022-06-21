@@ -3,7 +3,7 @@ package com.dw.ngms.cis.service.dto.examination.dockets;
 import lombok.Data;
 
 @Data
-public class DiagramDocketDto extends Object{
+public class DiagramDocketDto{
 
     private Long diagramId;
 

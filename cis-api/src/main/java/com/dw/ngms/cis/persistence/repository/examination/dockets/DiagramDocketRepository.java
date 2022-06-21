@@ -13,6 +13,9 @@ public interface DiagramDocketRepository extends JpaRepository<DiagramDocket,Lon
     @Query("SELECT D FROM DiagramDocket D WHERE D.examinationId=?1")
     DiagramDocket getDiagramDocketByExaminationId(Long examinationId);
 
+    @Query("SELECT D FROM DiagramDocket D WHERE D.diagramId=?1")
+    DiagramDocket getDiagramDocketByDiagramId(Long diagramId);
+
 
 
 

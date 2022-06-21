@@ -94,7 +94,8 @@ public class DocketService {
 
        Docket docket = new Docket();
        docket.setType("Diagram");
-       docket.setDiagramDocketDto(diagramDocketDto);
+       DiagramDocketDto diagramDocketDtoReturn = diagramDocketMapper.DiagramDocketToDiagramDocketDto(diagramDocket);
+       docket.setDiagramDocketDto(diagramDocketDtoReturn);
        return docket;
    }
 

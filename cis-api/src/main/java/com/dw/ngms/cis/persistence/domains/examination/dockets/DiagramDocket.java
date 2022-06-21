@@ -23,7 +23,7 @@ public class DiagramDocket {
     @Id
     @GeneratedValue(generator = "exam_diagram_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "exam_diagram_seq",sequenceName = "EXAM_DIAGR_DOCKET", allocationSize = 1)
-    @Column(name = "DIAGRAMID")
+    @Column(name = "DIAGRAMID",updatable = false,insertable = false)
     private Long diagramId;
 
     @Column(name = "EXAMINERNAME")

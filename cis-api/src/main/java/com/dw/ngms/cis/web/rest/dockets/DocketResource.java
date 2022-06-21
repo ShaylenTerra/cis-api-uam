@@ -58,7 +58,7 @@ public class DocketResource {
     @PostMapping("/updateDocket")
     public ResponseEntity updatedDocket(@Valid @RequestBody Docket docket){
         DiagramDocketDto diagramDocketDtoObj = docket.getDiagramDocketDto();
-        return ResponseEntity.ok().body(docketService.saveDocket(diagramDocketDtoObj));
+        return ResponseEntity.ok().body(docketService.updateDocket(diagramDocketDtoObj));
     }
 
     @GetMapping("/getDocketList")
