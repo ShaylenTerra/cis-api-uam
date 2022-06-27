@@ -55,13 +55,13 @@ public class DocketResource {
         return ResponseEntity.ok().body(docketService.saveDocket(diagramDocketDtoObj));
     }
 
-    @PostMapping("/updateDocket")
+   /* @PostMapping("/updateDocket")
     public ResponseEntity updatedDocket(@Valid @RequestBody Docket docket){
         DiagramDocketDto diagramDocketDtoObj = docket.getDiagramDocketDto();
         return ResponseEntity.ok().body(docketService.updateDocket(diagramDocketDtoObj));
-    }
+    }*/
 
-    @PutMapping("/updateDocket")
+    @PostMapping("/updateDocket")
     public ResponseEntity updatedDocket(@RequestParam @NotNull final Long examinationId,@RequestParam  ("examlist") String  examList){
         //DiagramDocketDto diagramDocketDtoObj = docket.getDiagramDocketDto();
         return ResponseEntity.ok().body(docketService.updateDocket(examinationId,examList));
