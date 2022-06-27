@@ -74,7 +74,7 @@ public class DocketService {
        return docket;
    }
 
-   public Docket updateDocket(DiagramDocketDto diagramDocketDto){
+   /*public Docket updateDocket(DiagramDocketDto diagramDocketDto){
        DiagramDocket diagramDocket = diagramDocketRepository.getDiagramDocketByExaminationId(diagramDocketDto.getExaminationId());
 
        diagramDocket.setExaminerName(diagramDocketDto.getExaminerName());
@@ -97,7 +97,17 @@ public class DocketService {
        DiagramDocketDto diagramDocketDtoReturn = diagramDocketMapper.DiagramDocketToDiagramDocketDto(diagramDocket);
        docket.setDiagramDocketDto(diagramDocketDtoReturn);
        return docket;
-   }
+   }*/
+    public Docket updateDocket(Long examId, String examList){
+        DiagramDocket diagramDocket = diagramDocketRepository.getDiagramDocketByExaminationId(examId);
+        diagramDocket.setExaminerChecklist(examList);
+        diagramDocket.setExaminationId(examId);
+        diagramDocketRepository.save(diagramDocket);
+        Docket docket = new Docket();
+        docket.setType("Diagram");
+       // docket.setDiagramDocketDto(diagramDocketDto);
+        return docket;
+    }
 
    /* Docket List */
 

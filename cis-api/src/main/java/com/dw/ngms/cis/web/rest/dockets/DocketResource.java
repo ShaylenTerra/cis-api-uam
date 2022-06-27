@@ -61,6 +61,13 @@ public class DocketResource {
         return ResponseEntity.ok().body(docketService.updateDocket(diagramDocketDtoObj));
     }
 
+    @PutMapping("/updateDocket")
+    public ResponseEntity updatedDocket(@RequestParam @NotNull final Long examinationId,@RequestParam  ("examlist") String  examList){
+        //DiagramDocketDto diagramDocketDtoObj = docket.getDiagramDocketDto();
+        return ResponseEntity.ok().body(docketService.updateDocket(examinationId,examList));
+    }
+
+
     @GetMapping("/getDocketList")
     public ResponseEntity getDocketList(/*@SortDefault(sort = "docketListId", direction = Sort.Direction.ASC,caseSensitive = false) final Pageable pageable*/){
         return ResponseEntity.ok().body(docketService.getDocketList());
