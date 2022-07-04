@@ -1,12 +1,10 @@
 package com.dw.ngms.cis.service.examination.dockets;
 
-import com.dw.ngms.cis.persistence.domains.examination.dockets.DiagramDocket;
-import com.dw.ngms.cis.persistence.domains.examination.dockets.Docket;
-import com.dw.ngms.cis.persistence.domains.examination.dockets.DocketList;
-import com.dw.ngms.cis.persistence.domains.examination.dockets.MasterDocket;
+import com.dw.ngms.cis.persistence.domains.examination.dockets.*;
 import com.dw.ngms.cis.persistence.domains.user.SecurityUser;
 import com.dw.ngms.cis.persistence.repository.examination.dockets.DiagramDocketRepository;
 import com.dw.ngms.cis.persistence.repository.examination.dockets.DocketListRepository;
+import com.dw.ngms.cis.persistence.repository.examination.dockets.DocketListValueRepository;
 import com.dw.ngms.cis.persistence.repository.examination.dockets.MasterDocketRepository;
 import com.dw.ngms.cis.security.CurrentLoggedInUser;
 import com.dw.ngms.cis.service.dto.examination.dockets.DiagramDocketDto;
@@ -21,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -43,6 +42,7 @@ public class DocketService {
 
     private final DocketListMapper docketListMapper;
 
+    private final DocketListValueRepository docketListValueRepository;
 
    /* Master Docket */
    public Page<MasterDocketDto> getAllMasterDocket(final Pageable pageable){
@@ -110,14 +110,67 @@ public class DocketService {
     }
 
    /* Docket List */
-
     public Stream<DocketListDto> getDocketList(){
          return docketListRepository.findAll().stream().map(docketListMapper::DocketListToDocketListDto);
     }
 
     public List<DocketList> getDocketByParentList(Long parentId){
-        //DocketListDto docketListDto =
         return docketListRepository.getDocketListByParentId(parentId);
+    }
+
+    public List<DocketList>getDocketListByType(Long typeId){
+        return docketListRepository.getDocketListByTypeId(typeId);
+    }
+
+   // public List<DocketList>updateDocketList(String DList){
+
+   // }
+
+  public DocketListValues saveDocketList(Long examinationid,Long typeId){
+        String value = generateDocketListString(typeId);
+        DocketListValues docketListValues = new DocketListValues();
+
+        docketListValues.setStringvalue(value);
+        docketListValues.setExaminationid(examinationid);
+        docketListValues.setDocketypeid(typeId);
+
+        docketListValueRepository.save(docketListValues);
+       return docketListValues;
+  }
+
+  //utility methods
+
+    /*
+    This method is used to create a string format of a docketList structure but with empty values, this string can be manipulated.
+    This will impact the decorator as the unfinished idea is to create a string that can then be broken down and added to a custom DTO method and returned on Angular.
+    The mapper/decorator is where the retrieval of values and the breaking down of the string takes place.
+    */
+
+    public String generateDocketListString(Long typeId){
+        List<DocketList> list = docketListRepository.getDocketListByTypeId(typeId);
+        String ids = "";
+        String values = "";
+        for(int i = 0 ; i < list.size() ; i++){
+            if(list.get(i).getParentId()==0) {
+                ids += "{";
+                ids += list.get(i).getDocketListId() + ":";
+                values += "{";
+                values += list.get(i).getDocketListId() + ":";
+                for (int j = 0; j < list.size(); j++) {
+                    if (list.get(i).getDocketListId() == list.get(j).getParentId()) {
+                        ids += list.get(j).getDocketListId() + ",";
+                        values += " " + ",";
+                    }
+                }
+                ids = ids.substring(0,ids.length()-1)+ "};";
+                values = values.substring(0,values.length()-1) + "};";
+            }
+        }
+        ids = ids.substring(0,ids.length()-1);
+        values = values.substring(0,values.length()-1);
+
+        values = ids + "=" + values;
+        return values;
     }
 
 }

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="EXAM_ALLOCATED_USERS")
+@Table(name="EXAM_TECHNICAL_USERS")
 public class ExaminationAllocatedUsers {
 
     @Id

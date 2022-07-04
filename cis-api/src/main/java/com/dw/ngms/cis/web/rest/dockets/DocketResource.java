@@ -78,5 +78,19 @@ public class DocketResource {
         return ResponseEntity.ok().body(docketService.getDocketByParentList(parentId));
     }
 
+    @GetMapping("/getDocketListByType")
+    public ResponseEntity getDocketListByType(@RequestParam @NotNull final Long typeId){
+        return ResponseEntity.ok().body(docketService.getDocketListByType(typeId));
+    }
+    
+   // @PostMapping("/updateDocketList")
+    //public ResponseEntity updateDocketList(@RequestParam @NotNull final String DListValues){
+      //  return ResponseEntity.ok().body(docketService.updateDocketList(DListValues));
+   // }
+
+    @PostMapping("/saveDocketList")
+    public ResponseEntity saveDocketList(@RequestParam @NotNull final Long examinationId, @RequestParam @NotNull final Long typeId){
+         return ResponseEntity.ok().body(docketService.saveDocketList(examinationId,typeId));
+    }
 
 }

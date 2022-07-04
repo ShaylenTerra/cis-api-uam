@@ -42,4 +42,7 @@ public class DocketList {
     @Column(name = "VALUE")
     private String value;
 
+    @Column(name = "CONTROL")
+    private String control;
+
 }

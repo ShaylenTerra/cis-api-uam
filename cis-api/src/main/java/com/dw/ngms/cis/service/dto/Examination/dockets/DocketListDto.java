@@ -20,4 +20,8 @@ public class DocketListDto {
     private char status;
 
     private String value;
+
+    private String control;
+
+    private String controlValues;
 }

@@ -12,4 +12,8 @@ public interface DocketListRepository extends JpaRepository<DocketList,Long> {
 
     @Query("SELECT D FROM DocketList D WHERE D.parentId=?1")
     List<DocketList> getDocketListByParentId(Long parentId);
+
+    @Query("SELECT D FROM DocketList D WHERE D.docketTypeId=?1")
+    List<DocketList> getDocketListByTypeId(Long typeId);
+
 }
